@@ -1,53 +1,15 @@
 import pyautogui
-import requests
-import os
 import shutil
 from time import sleep
 import datetime
 import shutil
+from mytoken import myToken
+from function import ch_rw, post_message, download_dir_call, dir_size, week_count, last_day, toast, day_folder_return
 
 start_day = input("다운로드 시작 날짜를 입력하세요 : ").split(" ")
 start_day = map(int, start_day)
 
-def post_message(token, channel, text):
-    response = requests.post("https://slack.com/api/chat.postMessage",
-                            headers={"Authorization": "Bearer " + token},
-                            data={"channel": channel, "text": text}
-                            )
-myToken = "xoxb-3111133345761-3122283163856-e7DMpoeAMrqCTJDgYQOX6Dxb"
-
-def ch_rw():
-    file_list = os.listdir("./")
-
-    if "ch_info.txt" not in file_list:
-        ch = int(input("채널을 입력해주세요. 최초 1회만 입력받습니다 : "))
-        f = open('./ch_info.txt', 'w')
-        f.write(str(ch))
-        f.close()
-        return ch
-
-    elif "ch_info.txt" in file_list:
-        f = open('./ch_info.txt', 'r')
-        ch = f.read()
-        f.close()
-        return ch
-
 disk = 'c:/'
-
-def week_count(day):
-    firstday = day.replace(day=1)
-    if firstday.weekday() == 6:
-        origin = firstday
-    elif firstday.weekday() < 3:
-        origin = firstday - datetime.timedelta(days=firstday.weekday() + 1)
-    else:
-        origin = firstday + datetime.timedelta(days=6 - firstday.weekday())
-    return (day - origin).days // 7 + 1
-
-def last_day(day):
-    next_month = day.replace(day=1, month=day.month+1)
-    return next_month - datetime.timedelta(days=1)
-
 
 weekday = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
