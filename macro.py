@@ -56,6 +56,7 @@ def macro():
 
             if (used / total) * 100 > 70:
                 post_message(myToken, f"{ch}ch", f"디스크 사용량이 70퍼센트를 넘었습니다.")
+                break
 
             if free < 89120571392:
                 post_message(myToken, f"{ch}ch", f'용량이 83기가보다 작아서 다운로드 중지')

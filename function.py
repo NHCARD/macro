@@ -73,7 +73,8 @@ def day_folder_return(day):
 
     return str(day.year)+str(month)+str(day_r)
 
-toast = Notification(icon=r"C:\Users\default.DESKTOP-A9BC2Q6\Desktop/test.png",
+dir = os.path.abspath('./img/stop.jpg')
+toast = Notification(icon=dir,
                      app_id="macro",
                      title="다운로드 완료",
                      msg="매크로 작동까지 마우스 멈춰!"

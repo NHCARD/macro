@@ -7,7 +7,7 @@ import datetime
 
 start_day = input("다운로드 시작 날짜를 입력하세요 : ").split(" ")
 start_day = map(int, start_day)
-disk = 'c:/'
+disk = 'D:/'
 desktop = 0
 
 weekday = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
@@ -16,7 +16,6 @@ def macro():
     day = start_day
     today = datetime.datetime(*day)
     ch = ch_rw()
-    # print()
     day_folder = day_folder_return(today)
     before_size = dir_size(download_dir_call() + f'{day_folder}')
     print("=================================================================")
@@ -41,6 +40,9 @@ def macro():
             toast.show()
             sleep(5)
 
+            # if not pyautogui.locateOnScreen('./cancel.png'):
+            #     desktop = 0
+
             pyautogui.hotkey('winleft', 'tab')
             sleep(1)
             desktop1 = pyautogui.locateOnScreen('./img/desktop1.png')
@@ -48,6 +50,10 @@ def macro():
                 pyautogui.hotkey('winleft', 'tab')
             else:
                 pyautogui.click(desktop1[0] + 30, desktop1[1] + 50, duration=1)
+
+            total, used, free = shutil.disk_usage(disk)
+            if free < 89120571392:
+                post_message(myToken, f"{ch}ch", f'용량이 83기가보다 작아서 다운로드 중지')
 
             pyautogui.click(pyautogui.locateOnScreen('./img/cancel.png'))
 
@@ -70,13 +76,8 @@ def macro():
             sleep(2)
             pyautogui.click(pyautogui.locateOnScreen('./img/download_all_check.png'), duration=1)
 
-            total, used, free = shutil.disk_usage(disk)
-
             if (used / total) * 100 > 70:
                 post_message(myToken, f"{ch}ch", f"디스크 사용량이 70퍼센트를 넘었습니다.")
-
-            if free < 89120571392:
-                post_message(myToken, f"{ch}ch", f'용량이 83기가보다 작아서 다운로드 중지')
 
             pyautogui.click(pyautogui.locateOnScreen('./img/download_start.png'), duration=1)
 
