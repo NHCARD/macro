@@ -4,10 +4,11 @@ import shutil
 from mytoken import myToken
 from function import ch_rw, post_message, download_dir_call, dir_size, week_count, last_day, toast, day_folder_return
 import datetime
+import os
 
 start_day = input("다운로드 시작 날짜를 입력하세요 : ").split(" ")
 start_day = map(int, start_day)
-disk = 'D:/'
+disk = 'e:/'
 desktop = 0
 
 weekday = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
@@ -17,7 +18,8 @@ def macro():
     today = datetime.datetime(*day)
     ch = ch_rw()
     day_folder = day_folder_return(today)
-    before_size = dir_size(download_dir_call() + f'{day_folder}')
+    dir = download_dir_call()
+    before_size = dir_size(dir + f'/{day_folder}')
     print("=================================================================")
     print(f'다운로드 시작 날짜 : {today.year}/{today.month}/{today.day}')
     print(f"채널 : {ch}")
@@ -25,11 +27,11 @@ def macro():
     while 1:
         sleep(10)
         day_folder = day_folder_return(today)
-        after_size = dir_size(download_dir_call()+day_folder)
+        after_size = dir_size(download_dir_call()+f'/{day_folder}')
         now = datetime.datetime.now()
         print(f"{now.month}/{now.day}-{now.hour}:{now.minute}:{now.second} - 실행중...")
 
-        # if not pyautogui.locateOnScreen('./img/hims.png'):
+        # if desktop == 1 and not pyautogui.locateOnScreen('./img/hims.png'):
         #     post_message(myToken, f"{ch}ch", 'hims 프로그램 꺼짐')
         #     print("hims프로그램이 꺼져서 매크로가 종료됨")
         #     break
@@ -54,6 +56,7 @@ def macro():
             total, used, free = shutil.disk_usage(disk)
             if free < 89120571392:
                 post_message(myToken, f"{ch}ch", f'용량이 83기가보다 작아서 다운로드 중지')
+                break
 
             pyautogui.click(pyautogui.locateOnScreen('./img/cancel.png'))
 
