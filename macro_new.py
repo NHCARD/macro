@@ -25,7 +25,7 @@ def macro():
     print(f"채널 : {ch}")
     print("=====매크로 시작=====")
     while 1:
-        sleep(10)
+        sleep(120)
         day_folder = day_folder_return(today)
         after_size = dir_size(download_dir_call()+f'/{day_folder}')
         now = datetime.datetime.now()
